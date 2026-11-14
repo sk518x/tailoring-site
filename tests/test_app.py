@@ -26,3 +26,20 @@ def test_services_page_uses_shared_layout():
     assert b"<title>" in response.data
     assert b"Sample Tailoring Studio" in response.data
     assert b"Chat on WhatsApp" in response.data
+
+def test_whatsapp_link_uses_settings():
+    from settings import WHATSAPP_NUMBER
+    client = app.test_client()
+    response = client.get("/")
+    assert WHATSAPP_NUMBER.encode() in response.data
+
+def test_whatsapp_number_change_shows_on_page():
+    import settings
+    original = settings.WHATSAPP_NUMBER
+    settings.WHATSAPP_NUMBER = "27111111111"
+    try:
+        client = app.test_client()
+        response = client.get("/")
+        assert b"27111111111" in response.data
+    finally:
+        settings.WHATSAPP_NUMBER = original

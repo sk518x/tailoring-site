@@ -1,5 +1,14 @@
 from flask import Flask, render_template
+import settings
 app = Flask(__name__)
+
+@app.context_processor
+def inject_settings():
+    return {
+        "business_name": settings.BUSINESS_NAME,
+        "whatsapp_number": settings.WHATSAPP_NUMBER,
+        "whatsapp_message": settings.WHATSAPP_MESSAGE,
+    }
 
 @app.route("/")
 def home():

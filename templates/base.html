@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{% block title %}Sample Tailoring Studio{% endblock %}</title>
+    <title>{% block title %}{{ business_name }}{% endblock %}</title>
   </head>
   <body>
     <header>
-      <h1>Sample Tailoring Studio</h1>
+      <h1>{{ business_name }}</h1>
       <nav>
         <a href="/">Home</a>
         <a href="/services">Services</a>
@@ -18,7 +18,7 @@
 
     <footer>
       <a
-        href="https://wa.me/27000000000?text=Hi%2C%20I%27d%20like%20to%20enquire"
+        href="https://wa.me/{{ whatsapp_number }}?text={{ whatsapp_message | urlencode }}"
         >Chat on WhatsApp</a
       >
     </footer>
