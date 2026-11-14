@@ -1,16 +1,3 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Sample Tailoring Studio</title>
-  </head>
-  <body>
-    <h1>Sample Tailoring Studio</h1>
-    <p>Custom dresses, school uniforms and alterations.</p>
-    <a href="https://wa.me/27000000000?text=Hi%2C%20I%27d%20like%20to%20enquire"
-      >Chat on WhatsApp</a
-    >
-  </body>
-</html>
-return render_template("home.html")
+{% extends "base.html" %} {% block content %}
+<p>Custom dresses, school uniforms and alterations.</p>
+{% endblock %}

@@ -19,3 +19,10 @@ def test_home_page_is_html_with_title():
     assert b"<title>" in response.data
     assert b"Sample Tailoring Studio" in response.data
     assert b"Chat on WhatsApp" in response.data
+
+def test_services_page_uses_shared_layout():
+    client = app.test_client()
+    response = client.get("/services")
+    assert b"<title>" in response.data
+    assert b"Sample Tailoring Studio" in response.data
+    assert b"Chat on WhatsApp" in response.data

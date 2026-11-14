@@ -7,7 +7,7 @@ def home():
 
 @app.route("/services")
 def services():
-    return "Services"
+    return render_template("services.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
