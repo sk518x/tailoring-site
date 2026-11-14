@@ -1,4 +1,14 @@
+from pathlib import Path
+
 from app import app
+
+import pytest
+import database
+
+
+@pytest.fixture(autouse=True)
+def temp_database(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    monkeypatch.setattr(database, "DB_PATH", tmp_path / "test.db")
 
 def test_home_page_shows_business_name():
     client = app.test_client()
@@ -109,3 +119,35 @@ def test_enquiry_without_name_is_rejected():
         "message": "Hello",
     })
     assert b"Please enter your name" in response.data
+
+def test_save_and_get_enquiry():
+        database.save_enquiry("Test Person", "0710000000", "School uniform", "status")
+        enquiries = database.get_enquiries()
+        assert len(enquiries) == 1
+        assert enquiries[0]["name"] == "Test Person"
+        assert enquiries[0]["source"] == "status"
+
+
+def test_newest_enquiry_comes_first():
+    database.save_enquiry("First Person", "0710000001", "Hello")
+    database.save_enquiry("Second Person", "0710000002", "Hello again")
+    enquiries = database.get_enquiries()
+    assert enquiries[0]["name"] == "Second Person"
+
+
+def test_submitting_form_saves_enquiry():
+    client = app.test_client()
+    client.post("/enquire", data={
+        "name": "Form Person",
+        "phone": "0710000003",
+        "message": "A dress please",
+    })
+    enquiries = database.get_enquiries()
+    assert len(enquiries) == 1
+    assert enquiries[0]["phone"] == "0710000003"
+
+
+def test_rejected_enquiry_is_not_saved():
+    client = app.test_client()
+    client.post("/enquire", data={"name": "", "phone": "0710000004", "message": "Hi"})
+    assert database.get_enquiries() == []

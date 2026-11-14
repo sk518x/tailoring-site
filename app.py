@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request
 import settings
+import database
+
 app = Flask(__name__)
 
 @app.context_processor
@@ -44,6 +46,7 @@ def enquire():
         message = request.form["message"].strip()
         if not name:
             return render_template("enquire.html", error="Please enter your name")
+        database.save_enquiry(name, phone, message)
         return render_template("thanks.html")
     return render_template("enquire.html")
 
