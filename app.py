@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, session
 import settings
 import database
+import re
 
 app = Flask(__name__)
 
@@ -16,6 +17,16 @@ def inject_settings():
         "opening_hours": settings.OPENING_HOURS,
         "phone": settings.PHONE,
     }
+
+def clean_source(value):
+    return re.sub(r"[^a-zA-Z0-9_-]", "", value)[:20]
+
+
+@app.before_request
+def remember_source():
+    source = request.args.get("src")
+    if source:
+        session["source"] = clean_source(source)
 
 @app.route("/")
 def home():
@@ -48,7 +59,7 @@ def enquire():
         message = request.form["message"].strip()
         if not name:
             return render_template("enquire.html", error="Please enter your name")
-        database.save_enquiry(name, phone, message)
+        database.save_enquiry(name, phone, message, session.get("source", ""))
         return render_template("thanks.html")
     return render_template("enquire.html")
 
@@ -67,6 +78,11 @@ def admin():
     if not session.get("is_admin"):
         return redirect("/admin/login")
     return render_template("admin.html", enquiries=database.get_enquiries())
+
+@app.route("/admin/logout")
+def admin_logout():
+    session.pop("is_admin", None)
+    return redirect("/admin/login")
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -179,3 +179,56 @@ def test_correct_password_shows_enquiries():
     assert response.status_code == 200
     assert b"Listed Person" in response.data
     assert b"0710000009" in response.data
+
+def test_source_tag_is_saved_with_enquiry():
+    client = app.test_client()
+    client.get("/?src=status")
+    client.post("/enquire", data={
+        "name": "Source Person",
+        "phone": "0710000010",
+        "message": "A dress",
+    })
+    enquiries = database.get_enquiries()
+    assert enquiries[0]["source"] == "status"
+
+
+def test_source_tag_survives_browsing_other_pages():
+    client = app.test_client()
+    client.get("/gallery?src=flyer")
+    client.get("/services")
+    client.post("/enquire", data={
+        "name": "Browser Person",
+        "phone": "0710000011",
+        "message": "A hem",
+    })
+    assert database.get_enquiries()[0]["source"] == "flyer"
+
+
+def test_enquiry_without_source_has_empty_source():
+    client = app.test_client()
+    client.post("/enquire", data={
+        "name": "Direct Person",
+        "phone": "0710000012",
+        "message": "A skirt",
+    })
+    assert database.get_enquiries()[0]["source"] == ""
+
+
+def test_source_tag_is_cleaned_up():
+    client = app.test_client()
+    client.get("/?src=<script>alert(1)</script>")
+    client.post("/enquire", data={
+        "name": "Odd Person",
+        "phone": "0710000013",
+        "message": "Hi",
+    })
+    source = database.get_enquiries()[0]["source"]
+    assert "<" not in source
+    assert len(source) <= 20
+
+def test_logout_ends_admin_session():
+    client = app.test_client()
+    client.post("/admin/login", data={"password": "test-password"})
+    assert client.get("/admin").status_code == 200
+    client.get("/admin/logout")
+    assert client.get("/admin").status_code == 302
