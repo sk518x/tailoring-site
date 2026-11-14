@@ -3,7 +3,10 @@ WHATSAPP_NUMBER = "27000000000"
 WHATSAPP_MESSAGE = "Hi, I'd like to enquire"
 
 GALLERY_ITEMS = [
-    {"title": "School uniform", "category": "Uniforms"},
-    {"title": "Evening dress", "category": "Dresses"},
-    {"title": "Trouser hem", "category": "Alterations"},
+    {"title": "uniform", "category": "Uniforms", "image": "uniform.png"},
+    {"title": "dress", "category": "Dresses", "image": "dress.png"},
+    {"title": "altered", "category": "Alterations", "image": "altered.png"},
 ]
+
+
+

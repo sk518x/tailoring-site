@@ -49,10 +49,15 @@ def test_gallery_page_lists_items():
     response = client.get("/gallery")
     assert response.status_code == 200
     assert b"Gallery" in response.data
-    assert b"School uniform" in response.data
+    assert b"uniform" in response.data
 
 def test_gallery_items_have_enquire_buttons():
     client = app.test_client()
     response = client.get("/gallery")
     assert b"Enquire on WhatsApp" in response.data
-    assert b"School%20uniform" in response.data
+    assert b"uniform" in response.data
+
+def test_gallery_shows_images():
+    client = app.test_client()
+    response = client.get("/gallery")
+    assert b"/static/images/uniform.png" in response.data
