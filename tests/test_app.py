@@ -77,8 +77,35 @@ def test_contact_page_shows_details():
     assert b"123 Sample Street" in response.data
     assert b"Mon to Fri" in response.data
 
-
 def test_navigation_links_to_contact():
     client = app.test_client()
     response = client.get("/")
     assert b'href="/contact"' in response.data
+
+def test_enquiry_page_shows_form():
+    client = app.test_client()
+    response = client.get("/enquire")
+    assert response.status_code == 200
+    assert b"<form" in response.data
+    assert b'name="name"' in response.data
+    assert b'name="phone"' in response.data
+    assert b'name="message"' in response.data
+
+def test_enquiry_submission_shows_thank_you():
+    client = app.test_client()
+    response = client.post("/enquire", data={
+        "name": "Test Person",
+        "phone": "0710000000",
+        "message": "I need a school uniform",
+    })
+    assert response.status_code == 200
+    assert b"Thank you" in response.data
+
+def test_enquiry_without_name_is_rejected():
+    client = app.test_client()
+    response = client.post("/enquire", data={
+        "name": "",
+        "phone": "0710000000",
+        "message": "Hello",
+    })
+    assert b"Please enter your name" in response.data

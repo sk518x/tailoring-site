@@ -1,0 +1,24 @@
+{% extends "base.html" %} {% block title %}Enquire - {{ business_name }}{%
+endblock %} {% block content %}
+<h2>Send an enquiry</h2>
+
+{% if error %}
+<p>{{ error }}</p>
+{% endif %}
+
+<form method="post" action="/enquire">
+  <p>
+    <label for="name">Your name</label><br />
+    <input type="text" id="name" name="name" />
+  </p>
+  <p>
+    <label for="phone">Phone number</label><br />
+    <input type="text" id="phone" name="phone" />
+  </p>
+  <p>
+    <label for="message">What would you like made or altered?</label><br />
+    <textarea id="message" name="message" rows="4"></textarea>
+  </p>
+  <button type="submit">Send</button>
+</form>
+{% endblock %}

@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import settings
 app = Flask(__name__)
 
@@ -35,6 +35,17 @@ def test_gallery_groups_items_under_category_headings():
     assert b"<h3>Uniforms</h3>" in response.data
     assert b"<h3>Dresses</h3>" in response.data
     assert b"<h3>Alterations</h3>" in response.data
+
+@app.route("/enquire", methods=["GET", "POST"])
+def enquire():
+    if request.method == "POST":
+        name = request.form["name"].strip()
+        phone = request.form["phone"].strip()
+        message = request.form["message"].strip()
+        if not name:
+            return render_template("enquire.html", error="Please enter your name")
+        return render_template("thanks.html")
+    return render_template("enquire.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
