@@ -61,3 +61,10 @@ def test_gallery_shows_images():
     client = app.test_client()
     response = client.get("/gallery")
     assert b"/static/images/uniform.png" in response.data
+
+def test_gallery_groups_items_under_category_headings():
+    client = app.test_client()
+    response = client.get("/gallery")
+    assert b"<h3>Uniforms</h3>" in response.data
+    assert b"<h3>Dresses</h3>" in response.data
+    assert b"<h3>Alterations</h3>" in response.data

@@ -22,5 +22,12 @@ def services():
 def gallery():
     return render_template("gallery.html", items=settings.GALLERY_ITEMS)
 
+def test_gallery_groups_items_under_category_headings():
+    client = app.test_client()
+    response = client.get("/gallery")
+    assert b"<h3>Uniforms</h3>" in response.data
+    assert b"<h3>Dresses</h3>" in response.data
+    assert b"<h3>Alterations</h3>" in response.data
+
 if __name__ == "__main__":
     app.run(debug=True)

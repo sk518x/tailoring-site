@@ -2,18 +2,19 @@
 endblock %} {% block content %}
 <h2>Gallery</h2>
 
-{% for item in items %}
-<img
-  src="{{ url_for('static', filename='images/' ~ item.image) }}"
-  alt="{{ item.title }}"
-  width="300"
-/>
+{% for category, group in items | groupby("category") %}
+<h3>{{ category }}</h3>
+{% for item in group %}
 <div>
-  <h3>{{ item.title }}</h3>
-  <p>{{ item.category }}</p>
+  <img
+    src="{{ url_for('static', filename='images/' ~ item.image) }}"
+    alt="{{ item.title }}"
+    width="300"
+  />
+  <h4>{{ item.title }}</h4>
   <a
     href="https://wa.me/{{ whatsapp_number }}?text={{ ('Hi, I am interested in the ' ~ item.title ~ ' shown on your site') | urlencode }}"
     >Enquire on WhatsApp</a
   >
 </div>
-{% endfor %} {% endblock %}
+{% endfor %} {% endfor %} {% endblock %}
