@@ -10,6 +10,11 @@ import database
 def temp_database(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     monkeypatch.setattr(database, "DB_PATH", tmp_path / "test.db")
 
+@pytest.fixture(autouse=True)
+def test_admin_password(monkeypatch):
+    import settings
+    monkeypatch.setattr(settings, "ADMIN_PASSWORD", "test-password")
+
 def test_home_page_shows_business_name():
     client = app.test_client()
     response = client.get("/")
@@ -151,3 +156,26 @@ def test_rejected_enquiry_is_not_saved():
     client = app.test_client()
     client.post("/enquire", data={"name": "", "phone": "0710000004", "message": "Hi"})
     assert database.get_enquiries() == []
+
+def test_admin_requires_login():
+    client = app.test_client()
+    response = client.get("/admin")
+    assert response.status_code == 302
+    assert "/admin/login" in response.headers["Location"]
+
+
+def test_wrong_password_is_rejected():
+    client = app.test_client()
+    response = client.post("/admin/login", data={"password": "wrong"})
+    assert b"Incorrect password" in response.data
+    assert client.get("/admin").status_code == 302
+
+
+def test_correct_password_shows_enquiries():
+    database.save_enquiry("Listed Person", "0710000009", "A skirt", "status")
+    client = app.test_client()
+    client.post("/admin/login", data={"password": "test-password"})
+    response = client.get("/admin")
+    assert response.status_code == 200
+    assert b"Listed Person" in response.data
+    assert b"0710000009" in response.data

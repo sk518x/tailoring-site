@@ -1,8 +1,10 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, session
 import settings
 import database
 
 app = Flask(__name__)
+
+app.secret_key = settings.SECRET_KEY
 
 @app.context_processor
 def inject_settings():
@@ -49,6 +51,22 @@ def enquire():
         database.save_enquiry(name, phone, message)
         return render_template("thanks.html")
     return render_template("enquire.html")
+
+@app.route("/admin/login", methods=["GET", "POST"])
+def admin_login():
+    if request.method == "POST":
+        password = request.form.get("password", "")
+        if settings.ADMIN_PASSWORD and password == settings.ADMIN_PASSWORD:
+            session["is_admin"] = True
+            return redirect("/admin")
+        return render_template("admin_login.html", error="Incorrect password")
+    return render_template("admin_login.html")
+
+@app.route("/admin")
+def admin():
+    if not session.get("is_admin"):
+        return redirect("/admin/login")
+    return render_template("admin.html", enquiries=database.get_enquiries())
 
 if __name__ == "__main__":
     app.run(debug=True)
