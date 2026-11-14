@@ -8,5 +8,7 @@ GALLERY_ITEMS = [
     {"title": "altered", "category": "Alterations", "image": "altered.png"},
 ]
 
-
+ADDRESS = "123 Sample Street, Mafikeng"
+OPENING_HOURS = "Mon to Fri, 8:00 to 17:00"
+PHONE = "018 000 0000"
 

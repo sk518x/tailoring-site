@@ -68,3 +68,17 @@ def test_gallery_groups_items_under_category_headings():
     assert b"<h3>Uniforms</h3>" in response.data
     assert b"<h3>Dresses</h3>" in response.data
     assert b"<h3>Alterations</h3>" in response.data
+
+def test_contact_page_shows_details():
+    client = app.test_client()
+    response = client.get("/contact")
+    assert response.status_code == 200
+    assert b"Contact" in response.data
+    assert b"123 Sample Street" in response.data
+    assert b"Mon to Fri" in response.data
+
+
+def test_navigation_links_to_contact():
+    client = app.test_client()
+    response = client.get("/")
+    assert b'href="/contact"' in response.data

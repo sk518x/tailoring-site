@@ -8,6 +8,9 @@ def inject_settings():
         "business_name": settings.BUSINESS_NAME,
         "whatsapp_number": settings.WHATSAPP_NUMBER,
         "whatsapp_message": settings.WHATSAPP_MESSAGE,
+        "address": settings.ADDRESS,
+        "opening_hours": settings.OPENING_HOURS,
+        "phone": settings.PHONE,
     }
 
 @app.route("/")
@@ -21,6 +24,10 @@ def services():
 @app.route("/gallery")
 def gallery():
     return render_template("gallery.html", items=settings.GALLERY_ITEMS)
+
+@app.route("/contact")
+def contact():
+    return render_template("contact.html")
 
 def test_gallery_groups_items_under_category_headings():
     client = app.test_client()

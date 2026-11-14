@@ -1,0 +1,13 @@
+{% extends "base.html" %} {% block title %}Contact - {{ business_name }}{%
+endblock %} {% block content %}
+<h2>Contact</h2>
+<p>Address: {{ address }}</p>
+<p>Opening hours: {{ opening_hours }}</p>
+<p>Phone: {{ phone }}</p>
+<p>
+  <a
+    href="https://wa.me/{{ whatsapp_number }}?text={{ whatsapp_message | urlencode }}"
+    >Chat on WhatsApp</a
+  >
+</p>
+{% endblock %}
