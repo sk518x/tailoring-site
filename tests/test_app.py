@@ -43,3 +43,16 @@ def test_whatsapp_number_change_shows_on_page():
         assert b"27111111111" in response.data
     finally:
         settings.WHATSAPP_NUMBER = original
+
+def test_gallery_page_lists_items():
+    client = app.test_client()
+    response = client.get("/gallery")
+    assert response.status_code == 200
+    assert b"Gallery" in response.data
+    assert b"School uniform" in response.data
+
+def test_gallery_items_have_enquire_buttons():
+    client = app.test_client()
+    response = client.get("/gallery")
+    assert b"Enquire on WhatsApp" in response.data
+    assert b"School%20uniform" in response.data

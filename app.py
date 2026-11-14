@@ -18,5 +18,9 @@ def home():
 def services():
     return render_template("services.html")
 
+@app.route("/gallery")
+def gallery():
+    return render_template("gallery.html", items=settings.GALLERY_ITEMS)
+
 if __name__ == "__main__":
     app.run(debug=True)
