@@ -24,12 +24,8 @@
     <main>{% block content %}{% endblock %}</main>
 
     <footer>
-      <a
-        class="button"
-        href="https://wa.me/{{ whatsapp_number }}?text={{
-        whatsapp_message | urlencode }}"
-        >Chat on WhatsApp</a
-      >
+      <p>{{ business_name }} &middot; {{ opening_hours }}</p>
+      <p><a href="/privacy">Privacy</a></p>
     </footer>
   </body>
 </html>

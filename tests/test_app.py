@@ -269,3 +269,16 @@ def test_privacy_page_loads():
     assert response.status_code == 200
     assert b"Privacy" in response.data
     assert b"phone number" in response.data
+
+def test_whatsapp_chat_button_only_on_chosen_pages():
+    client = app.test_client()
+    for path in ["/gallery", "/enquire", "/privacy"]:
+        response = client.get(path)
+        assert b"Chat on WhatsApp" not in response.data
+
+
+def test_footer_shows_opening_hours_on_every_page():
+    client = app.test_client()
+    for path in ["/", "/gallery", "/privacy"]:
+        response = client.get(path)
+        assert b"Mon to Fri" in response.data
