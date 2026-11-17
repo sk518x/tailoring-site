@@ -256,3 +256,16 @@ def test_qr_code_does_not_change_the_source_tag():
         "message": "A dress",
     })
     assert database.get_enquiries()[0]["source"] == ""
+
+def test_enquiry_form_has_privacy_note():
+    client = app.test_client()
+    response = client.get("/enquire")
+    assert b"/privacy" in response.data
+
+
+def test_privacy_page_loads():
+    client = app.test_client()
+    response = client.get("/privacy")
+    assert response.status_code == 200
+    assert b"Privacy" in response.data
+    assert b"phone number" in response.data

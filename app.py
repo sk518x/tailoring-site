@@ -46,6 +46,10 @@ def gallery():
 def contact():
     return render_template("contact.html")
 
+@app.route("/privacy")
+def privacy():
+    return render_template("privacy.html")
+
 def test_gallery_groups_items_under_category_headings():
     client = app.test_client()
     response = client.get("/gallery")
@@ -93,6 +97,8 @@ def qr_code():
     image.save(buffer, format="PNG")
     buffer.seek(0)
     return send_file(buffer, mimetype="image/png")
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
