@@ -17,3 +17,5 @@ PHONE = "018 000 0000"
 ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "")
 SECRET_KEY = os.environ.get("SECRET_KEY", "dev-only-change-me")
 
+SITE_URL = os.environ.get("SITE_URL", "http://127.0.0.1:5000")
+

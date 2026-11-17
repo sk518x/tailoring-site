@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, send_file
 import settings
 import database
 import re
+import io
+import qrcode
 
 app = Flask(__name__)
 
@@ -83,6 +85,14 @@ def admin():
 def admin_logout():
     session.pop("is_admin", None)
     return redirect("/admin/login")
+
+@app.route("/qr.png")
+def qr_code():
+    image = qrcode.make(settings.SITE_URL + "/?src=qr")
+    buffer = io.BytesIO()
+    image.save(buffer, format="PNG")
+    buffer.seek(0)
+    return send_file(buffer, mimetype="image/png")
 
 if __name__ == "__main__":
     app.run(debug=True)

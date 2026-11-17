@@ -238,3 +238,21 @@ def test_pages_link_the_stylesheet():
     response = client.get("/")
     assert b"/static/style.css" in response.data
     assert client.get("/static/style.css").status_code == 200
+
+def test_qr_code_is_a_png_image():
+    client = app.test_client()
+    response = client.get("/qr.png")
+    assert response.status_code == 200
+    assert response.content_type == "image/png"
+    assert response.data.startswith(b"\x89PNG")
+
+
+def test_qr_code_does_not_change_the_source_tag():
+    client = app.test_client()
+    client.get("/qr.png")
+    client.post("/enquire", data={
+        "name": "Scan Person",
+        "phone": "0710000014",
+        "message": "A dress",
+    })
+    assert database.get_enquiries()[0]["source"] == ""
