@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{% block title %}{{ business_name }}{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
   </head>
   <body>
     <header>
@@ -21,7 +25,9 @@
 
     <footer>
       <a
-        href="https://wa.me/{{ whatsapp_number }}?text={{ whatsapp_message | urlencode }}"
+        class="button"
+        href="https://wa.me/{{ whatsapp_number }}?text={{
+        whatsapp_message | urlencode }}"
         >Chat on WhatsApp</a
       >
     </footer>

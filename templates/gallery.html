@@ -13,7 +13,9 @@ endblock %} {% block content %}
   />
   <h4>{{ item.title }}</h4>
   <a
-    href="https://wa.me/{{ whatsapp_number }}?text={{ ('Hi, I am interested in the ' ~ item.title ~ ' shown on your site') | urlencode }}"
+    class="button"
+    href="https://wa.me/{{ whatsapp_number }}?text={{ ('Hi, I
+    am interested in the ' ~ item.title ~ ' shown on your site') | urlencode }}"
     >Enquire on WhatsApp</a
   >
 </div>

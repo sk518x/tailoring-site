@@ -232,3 +232,9 @@ def test_logout_ends_admin_session():
     assert client.get("/admin").status_code == 200
     client.get("/admin/logout")
     assert client.get("/admin").status_code == 302
+
+def test_pages_link_the_stylesheet():
+    client = app.test_client()
+    response = client.get("/")
+    assert b"/static/style.css" in response.data
+    assert client.get("/static/style.css").status_code == 200

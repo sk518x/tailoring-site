@@ -6,7 +6,9 @@ endblock %} {% block content %}
 <p>Phone: {{ phone }}</p>
 <p>
   <a
-    href="https://wa.me/{{ whatsapp_number }}?text={{ whatsapp_message | urlencode }}"
+    class="button"
+    href="https://wa.me/{{ whatsapp_number }}?text={{
+    whatsapp_message | urlencode }}"
     >Chat on WhatsApp</a
   >
 </p>
