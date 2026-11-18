@@ -1,11 +1,12 @@
 {% extends "base.html" %} {% block title %}{{ service.title }} - {{
 business_name }}{% endblock %} {% block banner_class %}banner-services{%
 endblock %} {% block content %}
-<p><a href="/services">&larr; All services</a></p>
-<h2>{{ service.title }}</h2>
-<p>{{ service.info }}</p>
-
-<h3>Examples of our work</h3>
+<a class="back-link" href="/services">&larr; All services</a>
+<div class="panel">
+    <h2>{{ service.title }}</h2>
+    <p>{{ service.info }}</p>
+    <h3>Examples of our work</h3>
+</div>
 <div class="service-cards">
   {% for item in service["items"] %}
   <div class="service-card">

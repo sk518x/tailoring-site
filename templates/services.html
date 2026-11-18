@@ -1,8 +1,11 @@
 {% extends "base.html" %} {% block title %}Services - {{ business_name }}{%
 endblock %} {% block banner_class %}banner-services{% endblock %} {% block
 content %}
-<!-- <h2>Our services</h2> -->
-<h2 class="page-title">Our services</h2>
+
+<div class="panel">
+    <h2>Our services</h2>
+    <p>Choose a service to see examples of our work.</p>
+</div>
 
 <div class="photo-cards">
     {% for service in services %}
