@@ -1,5 +1,6 @@
 {% extends "base.html" %} {% block title %}Gallery - {{ business_name }}{%
-endblock %} {% block content %}
+endblock %} {% block content %} {% block banner_class %}banner-gallery{%
+endblock %}
 <h2>Gallery</h2>
 
 {% for category, group in items | groupby("category") %}

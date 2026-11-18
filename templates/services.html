@@ -1,9 +1,15 @@
-{% extends "base.html" %} {% block title %}Services - Sample Tailoring Studio{%
-endblock %} {% block content %}
-<h2>Services</h2>
-<ul>
-  <li>Custom dresses</li>
-  <li>School uniforms</li>
-  <li>Alterations</li>
-</ul>
+{% extends "base.html" %} {% block title %}Services - {{ business_name }}{%
+endblock %} {% block banner_class %}banner-services{% endblock %} {% block
+content %}
+<h2>Our services</h2>
+
+<div class="photo-cards">
+    {% for service in services %}
+    <a class="photo-card" href="/services/{{ service.slug }}">
+        <img src="{{ url_for('static', filename='images/' ~ service.image) }}" alt="{{ service.title }}">
+        <span class="pill">{{ service.title }}</span>
+    </a>
+    {% endfor %}
+</div>
+
 {% include "_whatsapp_button.html" %} {% endblock %}

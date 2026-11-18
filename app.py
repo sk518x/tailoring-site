@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, send_file
+from flask import Flask, render_template, request, redirect, session, send_file, abort
 import settings
 import database
 import re
@@ -32,15 +32,27 @@ def remember_source():
 
 @app.route("/")
 def home():
-    return render_template("home.html")
+    return render_template("home.html", features=settings.FEATURES)
 
 @app.route("/services")
 def services():
-    return render_template("services.html")
+    return render_template("services.html", services=settings.SERVICES)
+
+
+@app.route("/services/<slug>")
+def service_detail(slug):
+    service = None
+    for candidate in settings.SERVICES:
+        if candidate["slug"] == slug:
+            service = candidate
+    if service is None:
+        abort(404)
+    return render_template("service_detail.html", service=service)
+
 
 @app.route("/gallery")
 def gallery():
-    return render_template("gallery.html", items=settings.GALLERY_ITEMS)
+    return redirect("/services", code=301)
 
 @app.route("/contact")
 def contact():

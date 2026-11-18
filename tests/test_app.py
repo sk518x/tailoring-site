@@ -4,6 +4,7 @@ from app import app
 
 import pytest
 import database
+from pathlib import Path
 
 
 @pytest.fixture(autouse=True)
@@ -58,31 +59,6 @@ def test_whatsapp_number_change_shows_on_page():
         assert b"27111111111" in response.data
     finally:
         settings.WHATSAPP_NUMBER = original
-
-def test_gallery_page_lists_items():
-    client = app.test_client()
-    response = client.get("/gallery")
-    assert response.status_code == 200
-    assert b"Gallery" in response.data
-    assert b"uniform" in response.data
-
-def test_gallery_items_have_enquire_buttons():
-    client = app.test_client()
-    response = client.get("/gallery")
-    assert b"Enquire on WhatsApp" in response.data
-    assert b"uniform" in response.data
-
-def test_gallery_shows_images():
-    client = app.test_client()
-    response = client.get("/gallery")
-    assert b"/static/images/uniform.png" in response.data
-
-def test_gallery_groups_items_under_category_headings():
-    client = app.test_client()
-    response = client.get("/gallery")
-    assert b"<h3>Uniforms</h3>" in response.data
-    assert b"<h3>Dresses</h3>" in response.data
-    assert b"<h3>Alterations</h3>" in response.data
 
 def test_contact_page_shows_details():
     client = app.test_client()
@@ -272,13 +248,99 @@ def test_privacy_page_loads():
 
 def test_whatsapp_chat_button_only_on_chosen_pages():
     client = app.test_client()
-    for path in ["/gallery", "/enquire", "/privacy"]:
+    for path in ["/services/dresses", "/enquire", "/privacy"]:
         response = client.get(path)
         assert b"Chat on WhatsApp" not in response.data
 
 
 def test_footer_shows_opening_hours_on_every_page():
     client = app.test_client()
-    for path in ["/", "/gallery", "/privacy"]:
+    for path in ["/", "/services/dresses", "/privacy"]:
         response = client.get(path)
         assert b"Mon to Fri" in response.data
+
+def test_pages_load_heading_font():
+    client = app.test_client()
+    response = client.get("/")
+    assert b"fonts.googleapis.com" in response.data
+
+
+def test_home_page_has_hero_section():
+    client = app.test_client()
+    response = client.get("/")
+    assert b"hero" in response.data
+    assert b"Chat on WhatsApp" in response.data
+
+def test_inner_pages_have_a_banner():
+    client = app.test_client()
+    for path in ["/services", "/services/dresses", "/contact", "/enquire", "/privacy"]:
+        response = client.get(path)
+        assert b"page-banner" in response.data
+
+
+def test_banner_images_exist():
+    images = Path(__file__).parent.parent / "static" / "images"
+    for name in ["banner-services.png",
+                 "banner-contact.png", "banner-default.png"]:
+        assert (images / name).exists()
+
+def test_services_page_links_to_each_service():
+    client = app.test_client()
+    response = client.get("/services")
+    assert b'href="/services/dresses"' in response.data
+    assert b'href="/services/uniforms"' in response.data
+    assert b'href="/services/alterations"' in response.data
+
+
+def test_service_page_shows_info_and_items():
+    client = app.test_client()
+    response = client.get("/services/uniforms")
+    assert response.status_code == 200
+    assert b"School uniforms" in response.data
+    assert b"Navy school blazer" in response.data
+    assert b"Navy%20school%20blazer" in response.data
+
+
+def test_unknown_service_is_not_found():
+    client = app.test_client()
+    assert client.get("/services/nonsense").status_code == 404
+
+
+def test_old_gallery_link_goes_to_services():
+    client = app.test_client()
+    response = client.get("/gallery")
+    assert response.status_code == 301
+    assert response.headers["Location"].endswith("/services")
+
+
+def test_menu_no_longer_has_gallery():
+    client = app.test_client()
+    response = client.get("/")
+    assert b'href="/gallery"' not in response.data
+
+def test_stylesheet_has_page_background():
+    client = app.test_client()
+    css = client.get("/static/style.css").data
+    assert b"page-background" in css
+
+def test_services_page_uses_photo_cards_with_pill_labels():
+    client = app.test_client()
+    response = client.get("/services")
+    assert b"photo-card" in response.data
+    assert b"pill" in response.data
+    assert b"Custom dresses" in response.data
+
+def test_home_hero_has_headline_underline_and_button():
+    client = app.test_client()
+    response = client.get("/")
+    assert b"hero-underline" in response.data
+    assert b"View our services" in response.data
+    assert b"Chat on WhatsApp" in response.data
+
+def test_home_page_has_feature_row():
+    client = app.test_client()
+    response = client.get("/")
+    assert b"feature-row" in response.data
+    assert b"Made to measure" in response.data
+    assert b"Quick alterations" in response.data
+    assert b"Local in KuGompo City" in response.data

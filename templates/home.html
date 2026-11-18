@@ -1,3 +1,26 @@
-{% extends "base.html" %} {% block content %}
-<p>Custom dresses, school uniforms and alterations.</p>
-{% include "_whatsapp_button.html" %} {% endblock %}
+{% extends "base.html" %}
+
+{% block banner %}{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-text">
+        <h2>Made to fit.<br>Made with care.</h2>
+        <div class="hero-underline"></div>
+        <p>Custom dresses, school uniforms and alterations, stitched to your measurements.</p>
+        <div class="hero-buttons">
+            <a class="button-outline" href="/services">View our services</a>
+            {% include "_whatsapp_button.html" %}
+        </div>
+    </div>
+</section>
+<div class="feature-row">
+    {% for feature in features %}
+    <div class="feature">
+        <span class="feature-icon">{{ feature.icon }}</span>
+        <h3>{{ feature.title }}</h3>
+        <p>{{ feature.text }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

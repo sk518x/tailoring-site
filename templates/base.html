@@ -4,23 +4,33 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{% block title %}{{ business_name }}{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
   </head>
   <body>
+    <div class="page-background"></div>
     <header>
       <h1>{{ business_name }}</h1>
       <nav>
         <a href="/">Home</a>
         <a href="/services">Services</a>
-        <a href="/gallery">Gallery</a>
         <a href="/contact">Contact</a>
         <a href="/enquire">Enquire</a>
       </nav>
     </header>
-
+    {% block banner %}
+    <div
+      class="page-banner {% block banner_class %}banner-default{% endblock %}"
+    ></div>
+    {% endblock %}
     <main>{% block content %}{% endblock %}</main>
 
     <footer>
