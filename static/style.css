@@ -1,8 +1,8 @@
 :root {
-  --terracotta: #a3502c;
-  --ochre: #588a66;
-  --brown: #ab836a;
-  --cream: #e8e5df;
+  --terracotta: #632d15;
+  --ochre: #5c2121;
+  --brown: #fafafa;
+  --cream: #cd6d6d;
   --green: #2e6b4f;
 }
 
@@ -17,7 +17,7 @@ body {
   flex-direction: column;
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.6;
-  color: var(--brown);
+  color: #5c2121;
 }
 
 h1,
@@ -28,26 +28,36 @@ h4 {
 }
 
 header {
-  background: var(--brown);
-  color: var(--cream);
-  padding: 1rem;
   text-align: center;
+  background: rgba(182, 147, 147, 0.7);
+  border-radius: 50px;
+  margin: 15px;
+  padding: 12px 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
 header h1 {
   margin: 0 0 0.5rem 0;
-  font-size: 2.4rem;
-  color: var(--ochre);
+  font-size: 45px;
+  color: #4e1515;
+  text-shadow: 2px 2px 8px rgba(123, 120, 120, 0.8);
 }
 
 nav a {
-  color: var(--cream);
+  color: #4e1515;
+  padding: 8px 14px;
   margin-right: 1rem;
+  font-size: 18px;
+  /* font-weight: 5000; */
   text-decoration: none;
+  border-radius: 20px;
+  transition: all 0.3s ease;
 }
 
 nav a:hover {
-  color: var(--ochre);
+  color: #5c2121;
+  background: #d0bfbf;
+  transform: scale(1.1);
 }
 
 main {
@@ -62,12 +72,16 @@ footer {
   padding: 0.5rem 1rem;
   font-size: 0.8rem;
   text-align: center;
-  background: var(--brown);
-  color: var(--cream);
+  background: rgba(182, 147, 147, 0.7);
+  color: #4e1515;
 }
 
 footer a {
-  color: var(--ochre);
+  color: #620909;
+}
+
+footer a:hover {
+  background: #caa9a9;
 }
 
 img {
@@ -82,7 +96,7 @@ img {
   background:
     linear-gradient(rgba(59, 36, 22, 0.6), rgba(59, 36, 22, 0.6)),
     url("images/hero.png") center / cover;
-  color: var(--cream);
+  color: #dccdcd;
   padding: 2rem 1.5rem;
   border-radius: 12px;
   margin-bottom: 1.5rem;
@@ -93,6 +107,8 @@ img {
 }
 
 .hero h2 {
+  color: #dccdcd;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
   font-size: 2.4rem;
   line-height: 1.15;
   margin: 0 0 0.8rem 0;
@@ -189,7 +205,7 @@ textarea {
   border-radius: 12px;
   padding: 1rem;
   text-decoration: none;
-  color: var(--brown);
+  color: #632d15;
   box-shadow: 0 2px 8px rgba(59, 36, 22, 0.15);
 }
 
@@ -245,8 +261,8 @@ textarea {
   left: 50%;
   bottom: 1rem;
   transform: translateX(-50%);
-  background: white;
-  color: var(--brown);
+  background: rgb(230, 223, 223);
+  color: #620909;
   padding: 0.5rem 1.2rem;
   border-radius: 999px;
   font-weight: bold;
@@ -269,7 +285,7 @@ textarea {
 .feature {
   text-align: center;
   padding: 1rem;
-  background: white;
+  background: rgb(228, 218, 218);
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(59, 36, 22, 0.15);
 }
@@ -303,13 +319,13 @@ textarea {
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 16px;
-  color: var(--cream);
+  color: #632d15;
   box-shadow: 0 8px 24px rgba(59, 36, 22, 0.3);
 }
 
 .glass-card h2,
 .glass-card a {
-  color: var(--cream);
+  color: #5d1b1b;
 }
 
 .glass-card input,
@@ -317,4 +333,14 @@ textarea {
   background: rgba(255, 255, 255, 0.8);
   border: 1px solid rgba(59, 36, 22, 0.25);
   border-radius: 8px;
+}
+
+.page-title {
+  color: #4e1515;
+  text-shadow: 0 2px 6px rgba(59, 36, 22, 0.6);
+  background: rgba(182, 147, 147, 0.7);
+  border-radius: 20px;
+  margin: 5px;
+  padding: 5px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
