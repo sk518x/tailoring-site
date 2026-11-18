@@ -17,15 +17,16 @@
   </head>
   <body>
     <div class="page-background"></div>
-    <header>
-      <h1>{{ business_name }}</h1>
-      <nav>
+   <header>
+    <h1>{{ business_name }}</h1>
+    <nav>
         <a href="/">Home</a>
         <a href="/services">Services</a>
         <a href="/contact">Contact</a>
         <a href="/enquire">Enquire</a>
-      </nav>
-    </header>
+    </nav>
+    <a class="header-button" href="https://wa.me/{{ whatsapp_number }}?text={{ whatsapp_message | urlencode }}">WhatsApp</a>
+</header>
     {% block banner %}
     <div
       class="page-banner {% block banner_class %}banner-default{% endblock %}"
