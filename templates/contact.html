@@ -1,7 +1,9 @@
 {% extends "base.html" %} {% block title %}Contact - {{ business_name }}{%
-endblock %} {% block content %} {% block banner_class %}banner-contact{%
+endblock %} {% block content %} {% block banner_class %} {%
 endblock %}
+<div class="glass-card">
 <h2>Contact</h2>
+
 <p>Address: {{ address }}</p>
 <p>Opening hours: {{ opening_hours }}</p>
 <p>Phone: {{ phone }}</p>
@@ -13,4 +15,5 @@ endblock %}
     >Chat on WhatsApp</a
   >
 </p>
+</div>
 {% endblock %}

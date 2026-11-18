@@ -271,18 +271,11 @@ def test_home_page_has_hero_section():
     assert b"hero" in response.data
     assert b"Chat on WhatsApp" in response.data
 
-def test_inner_pages_have_a_banner():
+def test_inner_pages_have_no_banner():
     client = app.test_client()
     for path in ["/services", "/services/dresses", "/contact", "/enquire", "/privacy"]:
         response = client.get(path)
-        assert b"page-banner" in response.data
-
-
-def test_banner_images_exist():
-    images = Path(__file__).parent.parent / "static" / "images"
-    for name in ["banner-services.png",
-                 "banner-contact.png", "banner-default.png"]:
-        assert (images / name).exists()
+        assert b"page-banner" not in response.data
 
 def test_services_page_links_to_each_service():
     client = app.test_client()

@@ -1,12 +1,12 @@
 {% extends "base.html" %} {% block title %}Enquire - {{ business_name }}{%
 endblock %} {% block content %}
+<div class="glass-card">
 <h2>Send an enquiry</h2>
 
 {% if error %}
 <p>{{ error }}</p>
 {% endif %}
 
-<div class="glass-card">
 <form method="post" action="/enquire">
   <p>
     <label for="name">Your name</label><br />
