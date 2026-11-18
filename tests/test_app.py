@@ -345,7 +345,7 @@ def test_home_page_has_feature_row():
     assert b"Quick alterations" in response.data
     assert b"Local in KuGompo City" in response.data
 
-def test_header_has_whatsapp_button():
+def test_enquiry_form_is_in_a_glass_card():
     client = app.test_client()
-    response = client.get("/gallery", follow_redirects=True)
-    assert b"header-button" in response.data
+    response = client.get("/enquire")
+    assert b"glass-card" in response.data

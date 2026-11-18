@@ -299,29 +299,6 @@ textarea {
   }
 }
 
-.header-button {
-  display: inline-block;
-  background: #25d366;
-  color: white;
-  padding: 0.4rem 1rem;
-  border-radius: 999px;
-  text-decoration: none;
-  font-size: 0.9rem;
-}
-
-@media (min-width: 700px) {
-  header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    text-align: left;
-  }
-
-  header h1 {
-    margin: 0;
-  }
-}
-
 .glass-card {
   max-width: 480px;
   margin: 1rem auto;
