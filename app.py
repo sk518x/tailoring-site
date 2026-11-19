@@ -110,7 +110,10 @@ def qr_code():
     buffer.seek(0)
     return send_file(buffer, mimetype="image/png")
 
-
+@app.route("/health")
+def health():
+    return "ok"
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=settings.DEBUG)
+

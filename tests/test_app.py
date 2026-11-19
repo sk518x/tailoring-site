@@ -289,10 +289,9 @@ def test_service_page_shows_info_and_items():
     client = app.test_client()
     response = client.get("/services/uniforms")
     assert response.status_code == 200
-    assert b"School uniforms" in response.data
-    assert b"Navy school blazer" in response.data
-    assert b"Navy%20school%20blazer" in response.data
-
+    assert b"Uniforms" in response.data
+    assert b"Church uniform" in response.data
+    assert b"Church%20uniform" in response.data
 
 def test_unknown_service_is_not_found():
     client = app.test_client()
@@ -321,7 +320,7 @@ def test_services_page_uses_photo_cards_with_pill_labels():
     response = client.get("/services")
     assert b"photo-card" in response.data
     assert b"pill" in response.data
-    assert b"Custom dresses" in response.data
+    assert b"Custom outfits" in response.data
 
 def test_home_hero_has_headline_underline_and_button():
     client = app.test_client()
@@ -336,9 +335,32 @@ def test_home_page_has_feature_row():
     assert b"feature-row" in response.data
     assert b"Made to measure" in response.data
     assert b"Quick alterations" in response.data
-    assert b"Local in KuGompo City" in response.data
+    assert b"Local in Mafikeng" in response.data
 
 def test_enquiry_form_is_in_a_glass_card():
     client = app.test_client()
     response = client.get("/enquire")
     assert b"glass-card" in response.data
+
+def test_debug_is_off_by_default():
+    import settings
+    assert settings.DEBUG is False
+
+
+def test_health_page_says_ok():
+    client = app.test_client()
+    response = client.get("/health")
+    assert response.status_code == 200
+    assert b"ok" in response.data
+
+
+def test_business_details_can_come_from_environment(monkeypatch):
+    import importlib
+    import settings
+    monkeypatch.setenv("BUSINESS_NAME", "Real Studio")
+    importlib.reload(settings)
+    try:
+        assert settings.BUSINESS_NAME == "Real Studio"
+    finally:
+        monkeypatch.delenv("BUSINESS_NAME")
+        importlib.reload(settings)
