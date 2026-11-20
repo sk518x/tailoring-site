@@ -1,28 +1,33 @@
 {% extends "base.html" %} {% block title %}Enquiries - {{ business_name }}{%
 endblock %} {% block content %}
-<h2>Enquiries</h2>
-
-<p><a href="/admin/logout">Log out</a></p>
+<div class="panel">
+    <h2>Enquiries</h2>
+    <a class="back-link" href="/admin/logout">Log out</a>
+</div>
 
 {% if enquiries %}
-<table>
-  <tr>
-    <th>Received</th>
-    <th>Name</th>
-    <th>Phone</th>
-    <th>Message</th>
-    <th>Source</th>
-  </tr>
-  {% for enquiry in enquiries %}
-  <tr>
-    <td>{{ enquiry.created_at }}</td>
-    <td>{{ enquiry.name }}</td>
-    <td>{{ enquiry.phone }}</td>
-    <td>{{ enquiry.message }}</td>
-    <td>{{ enquiry.source }}</td>
-  </tr>
-  {% endfor %}
-</table>
+<div class="panel table-wrap">
+    <table class="enquiry-table">
+        <tr>
+            <th>Received</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Message</th>
+            <th>Source</th>
+        </tr>
+        {% for enquiry in enquiries %}
+        <tr>
+            <td>{{ enquiry.created_at }}</td>
+            <td>{{ enquiry.name }}</td>
+            <td>{{ enquiry.phone }}</td>
+            <td>{{ enquiry.message }}</td>
+            <td>{{ enquiry.source }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
 {% else %}
-<p>No enquiries yet.</p>
+<div class="panel">
+    <p>No enquiries yet.</p>
+</div>
 {% endif %} {% endblock %}
