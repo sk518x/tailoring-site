@@ -44,14 +44,15 @@ header h1 {
 }
 
 nav a {
+  display: inline-block;
   color: #4e1515;
+  background: rgba(255, 255, 255, 0.45);
   padding: 8px 14px;
-  margin-right: 1rem;
+  margin: 0.2rem 0.3rem;
   font-size: 18px;
   text-decoration: none;
   border-radius: 20px;
   transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.45);
 }
 
 nav a:hover {
