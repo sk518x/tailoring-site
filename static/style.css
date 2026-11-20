@@ -48,10 +48,10 @@ nav a {
   padding: 8px 14px;
   margin-right: 1rem;
   font-size: 18px;
-  /* font-weight: 5000; */
   text-decoration: none;
   border-radius: 20px;
   transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.45);
 }
 
 nav a:hover {
