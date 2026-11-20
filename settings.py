@@ -3,7 +3,7 @@ import os
 BUSINESS_NAME = os.environ.get("BUSINESS_NAME", "Sample Tailoring Studio")
 WHATSAPP_NUMBER = os.environ.get("WHATSAPP_NUMBER", "27000000000")
 WHATSAPP_MESSAGE = "Hi, I'd like to enquire"
-ADDRESS = os.environ.get("ADDRESS", "123 Sample Street, Mafikeng")
+ADDRESS = os.environ.get("ADDRESS", "123 Sample Street, Sample City")
 OPENING_HOURS = os.environ.get("OPENING_HOURS", "Mon to Fri, 8:00 to 17:00")
 PHONE = os.environ.get("PHONE", "018 000 0000")
 
@@ -46,10 +46,11 @@ SERVICES = [
     },
 ]
 
+CITY = os.environ.get("CITY", "Sample City")
 FEATURES = [
     {"icon": "📏", "title": "Made to measure", "text": "Fitted to you, not off the rack."},
     {"icon": "🧵", "title": "Quick alterations", "text": "Most small jobs ready in days."},
-    {"icon": "📍", "title": "Local in Mafikeng", "text": "Come in, or chat on WhatsApp."},
+    {"icon": "📍", "title": f"Local in {CITY}", "text": "For more info, let's chat on WhatsApp."},
 ]
 
 DEBUG = os.environ.get("DEBUG", "") == "1"

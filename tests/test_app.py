@@ -335,7 +335,8 @@ def test_home_page_has_feature_row():
     assert b"feature-row" in response.data
     assert b"Made to measure" in response.data
     assert b"Quick alterations" in response.data
-    assert b"Local in Mafikeng" in response.data
+    import settings
+    assert f"Local in {settings.CITY}".encode() in response.data
 
 def test_enquiry_form_is_in_a_glass_card():
     client = app.test_client()
