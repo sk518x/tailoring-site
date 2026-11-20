@@ -52,6 +52,7 @@ nav a {
   font-size: 18px;
   text-decoration: none;
   border-radius: 20px;
+  border-radius: 2px 2px 8px rgba(255, 255, 255, 0.45);
   transition: all 0.3s ease;
 }
 
