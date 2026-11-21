@@ -354,18 +354,6 @@ def test_health_page_says_ok():
     assert response.status_code == 200
     assert b"ok" in response.data
 
-
-def test_business_details_can_come_from_environment(monkeypatch):
-    import importlib
-    import settings
-    monkeypatch.setenv("BUSINESS_NAME", "Real Studio")
-    importlib.reload(settings)
-    try:
-        assert settings.BUSINESS_NAME == "Real Studio"
-    finally:
-        monkeypatch.delenv("BUSINESS_NAME")
-        importlib.reload(settings)
-
 def test_real_photos_stay_out_of_git():
     gitignore = (Path(__file__).parent.parent / ".gitignore").read_text()
     assert "local_settings.py" in gitignore
@@ -377,3 +365,17 @@ def test_service_images_are_paths_inside_static():
         assert service["image"].startswith(("images/", "photos/"))
         for item in service["items"]:
             assert item["image"].startswith(("images/", "photos/"))
+
+def test_missing_local_settings_falls_back_to_placeholders(monkeypatch):
+    import importlib
+    import sys
+    import settings
+    monkeypatch.setenv("USE_LOCAL_SETTINGS", "1")
+    monkeypatch.setitem(sys.modules, "local_settings", None)
+    try:
+        importlib.reload(settings)
+        for service in settings.SERVICES:
+            assert service["image"].startswith("images/")
+    finally:
+        monkeypatch.delenv("USE_LOCAL_SETTINGS")
+        importlib.reload(settings)

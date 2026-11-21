@@ -56,4 +56,18 @@ FEATURES = [
 DEBUG = os.environ.get("DEBUG", "") == "1"
 
 if os.environ.get("USE_LOCAL_SETTINGS") == "1":
-  from local_settings import SERVICES
+    try:
+        from local_settings import SERVICES
+    except ModuleNotFoundError:
+        import logging
+        logging.getLogger(__name__).warning(
+            "local_settings.py not found, using placeholder SERVICES"
+        )
+if os.environ.get("USE_LOCAL_SETTINGS") == "1":
+    try:
+        from local_settings import SERVICES
+    except ModuleNotFoundError:
+        import logging
+        logging.getLogger(__name__).warning(
+            "local_settings.py not found, using placeholder SERVICES"
+        )
