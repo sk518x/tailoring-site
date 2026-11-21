@@ -436,6 +436,7 @@ def test_successful_login_resets_the_counter():
     for _ in range(4):
         client.post("/admin/login", data={"password": "wrong"})
     client.post("/admin/login", data={"password": "test-password"})
+    assert client.get("/admin").status_code == 200
     for _ in range(4):
         client.post("/admin/login", data={"password": "wrong"})
     response = client.post("/admin/login", data={"password": "test-password"})
