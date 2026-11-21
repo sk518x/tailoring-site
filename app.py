@@ -8,6 +8,9 @@ import qrcode
 app = Flask(__name__)
 
 app.secret_key = settings.SECRET_KEY
+app.config["SESSION_COOKIE_HTTPONLY"] = True
+app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
+app.config["SESSION_COOKIE_SECURE"] = not settings.DEBUG
 
 @app.context_processor
 def inject_settings():
@@ -97,7 +100,7 @@ def admin():
         return redirect("/admin/login")
     return render_template("admin.html", enquiries=database.get_enquiries())
 
-@app.route("/admin/logout")
+@app.route("/admin/logout", methods=["POST"])
 def admin_logout():
     session.pop("is_admin", None)
     return redirect("/admin/login")

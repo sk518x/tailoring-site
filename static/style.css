@@ -406,3 +406,11 @@ textarea {
   background: rgba(255, 255, 255, 0.45);
   box-shadow: none;
 }
+
+.inline-form {
+  margin: 0;
+}
+
+button.back-link {
+  font-family: inherit;
+}

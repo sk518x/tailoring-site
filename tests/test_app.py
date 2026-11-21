@@ -206,7 +206,7 @@ def test_logout_ends_admin_session():
     client = app.test_client()
     client.post("/admin/login", data={"password": "test-password"})
     assert client.get("/admin").status_code == 200
-    client.get("/admin/logout")
+    client.post("/admin/logout")
     assert client.get("/admin").status_code == 302
 
 def test_pages_link_the_stylesheet():
@@ -379,3 +379,14 @@ def test_missing_local_settings_falls_back_to_placeholders(monkeypatch):
     finally:
         monkeypatch.delenv("USE_LOCAL_SETTINGS")
         importlib.reload(settings)
+
+def test_session_cookie_is_hardened():
+    assert app.config["SESSION_COOKIE_HTTPONLY"] is True
+    assert app.config["SESSION_COOKIE_SAMESITE"] == "Lax"
+    assert app.config["SESSION_COOKIE_SECURE"] is True
+
+def test_logout_link_does_nothing_on_get():
+    client = app.test_client()
+    client.post("/admin/login", data={"password": "test-password"})
+    assert client.get("/admin/logout").status_code == 405
+    assert client.get("/admin").status_code == 200
