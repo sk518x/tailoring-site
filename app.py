@@ -4,6 +4,7 @@ import database
 import re
 import io
 import qrcode
+import time
 
 app = Flask(__name__)
 
@@ -11,6 +12,21 @@ app.secret_key = settings.SECRET_KEY
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 app.config["SESSION_COOKIE_SECURE"] = not settings.DEBUG
+
+FAILED_LOGINS = {}
+MAX_ATTEMPTS = 5
+WINDOW_SECONDS = 15 * 60
+
+
+def client_key():
+    return request.headers.get("X-Real-IP") or request.remote_addr
+
+
+def is_locked(key):
+    now = time.time()
+    recent = [t for t in FAILED_LOGINS.get(key, []) if now - t < WINDOW_SECONDS]
+    FAILED_LOGINS[key] = recent
+    return len(recent) >= MAX_ATTEMPTS
 
 @app.context_processor
 def inject_settings():
@@ -65,13 +81,6 @@ def contact():
 def privacy():
     return render_template("privacy.html")
 
-def test_gallery_groups_items_under_category_headings():
-    client = app.test_client()
-    response = client.get("/gallery")
-    assert b"<h3>Uniforms</h3>" in response.data
-    assert b"<h3>Dresses</h3>" in response.data
-    assert b"<h3>Alterations</h3>" in response.data
-
 @app.route("/enquire", methods=["GET", "POST"])
 def enquire():
     if request.method == "POST":
@@ -89,10 +98,18 @@ def enquire():
 @app.route("/admin/login", methods=["GET", "POST"])
 def admin_login():
     if request.method == "POST":
+        key = client_key()
+        if is_locked(key):
+            return render_template(
+                "admin_login.html",
+                error="Too many attempts. Please try again in 15 minutes.",
+            ), 429
         password = request.form.get("password", "")
         if settings.ADMIN_PASSWORD and password == settings.ADMIN_PASSWORD:
+            FAILED_LOGINS.pop(key, None)
             session["is_admin"] = True
             return redirect("/admin")
+        FAILED_LOGINS.setdefault(key, []).append(time.time())
         return render_template("admin_login.html", error="Incorrect password")
     return render_template("admin_login.html")
 

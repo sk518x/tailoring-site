@@ -16,6 +16,12 @@ def test_admin_password(monkeypatch):
     import settings
     monkeypatch.setattr(settings, "ADMIN_PASSWORD", "test-password")
 
+@pytest.fixture(autouse=True)
+def clear_login_attempts():
+    import app as app_module
+    if hasattr(app_module, "FAILED_LOGINS"):
+        app_module.FAILED_LOGINS.clear()
+
 def test_home_page_shows_business_name():
     client = app.test_client()
     response = client.get("/")
@@ -408,3 +414,42 @@ def test_filled_trap_field_is_not_saved():
     assert response.status_code == 200
     assert b"Thank you" in response.data
     assert database.get_enquiries() == []
+
+def test_repeated_wrong_passwords_lock_the_login():
+    client = app.test_client()
+    for _ in range(5):
+        client.post("/admin/login", data={"password": "wrong"})
+    response = client.post("/admin/login", data={"password": "wrong"})
+    assert response.status_code == 429
+
+
+def test_locked_login_rejects_the_correct_password():
+    client = app.test_client()
+    for _ in range(5):
+        client.post("/admin/login", data={"password": "wrong"})
+    response = client.post("/admin/login", data={"password": "test-password"})
+    assert response.status_code == 429
+    assert client.get("/admin").status_code == 302
+
+def test_successful_login_resets_the_counter():
+    client = app.test_client()
+    for _ in range(4):
+        client.post("/admin/login", data={"password": "wrong"})
+    client.post("/admin/login", data={"password": "test-password"})
+    for _ in range(4):
+        client.post("/admin/login", data={"password": "wrong"})
+    response = client.post("/admin/login", data={"password": "test-password"})
+    assert response.status_code == 302
+
+def test_lockout_expires():
+    import app as app_module
+    client = app.test_client()
+    for _ in range(5):
+        client.post("/admin/login", data={"password": "wrong"})
+    assert client.post("/admin/login", data={"password": "test-password"}).status_code == 429
+    app_module.WINDOW_SECONDS = 0
+    try:
+        response = client.post("/admin/login", data={"password": "test-password"})
+        assert response.status_code == 302
+    finally:
+        app_module.WINDOW_SECONDS = 15 * 60
