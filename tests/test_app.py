@@ -390,3 +390,21 @@ def test_logout_link_does_nothing_on_get():
     client.post("/admin/login", data={"password": "test-password"})
     assert client.get("/admin/logout").status_code == 405
     assert client.get("/admin").status_code == 200
+
+def test_enquiry_form_has_hidden_trap_field():
+    client = app.test_client()
+    response = client.get("/enquire")
+    assert b'name="website"' in response.data
+
+
+def test_filled_trap_field_is_not_saved():
+    client = app.test_client()
+    response = client.post("/enquire", data={
+        "name": "Spam Bot",
+        "phone": "0710000099",
+        "message": "Buy cheap stuff",
+        "website": "http://spam.example",
+    })
+    assert response.status_code == 200
+    assert b"Thank you" in response.data
+    assert database.get_enquiries() == []

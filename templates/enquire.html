@@ -20,6 +20,10 @@ endblock %} {% block content %}
     <label for="message">What would you like made or altered?</label><br />
     <textarea id="message" name="message" rows="4"></textarea>
   </p>
+  <div class="hp-field" aria-hidden="true">
+    <label for="website">Leave this field empty</label>
+    <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+</div>
   <button type="submit">Send</button>
   <p>
     We use your name and phone number only to reply to your enquiry. Read our

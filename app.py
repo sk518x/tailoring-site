@@ -78,6 +78,8 @@ def enquire():
         name = request.form["name"].strip()
         phone = request.form["phone"].strip()
         message = request.form["message"].strip()
+        if request.form.get("website", "").strip():
+            return render_template("thanks.html")
         if not name:
             return render_template("enquire.html", error="Please enter your name")
         database.save_enquiry(name, phone, message, session.get("source", ""))
