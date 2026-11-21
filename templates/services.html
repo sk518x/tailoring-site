@@ -10,7 +10,7 @@ content %}
 <div class="photo-cards">
     {% for service in services %}
     <a class="photo-card" href="/services/{{ service.slug }}">
-        <img src="{{ url_for('static', filename='images/' ~ service.image) }}" alt="{{ service.title }}">
+        <img src="{{ url_for('static', filename=service.image) }}" alt="{{ service.title }}">
         <span class="pill">{{ service.title }}</span>
     </a>
     {% endfor %}

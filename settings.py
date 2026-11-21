@@ -18,9 +18,9 @@ SERVICES = [
         "title": "Custom outfits",
         "summary": "Made to your measurements and your design.",
         "info": "Bring a picture or an idea. We take measurements, agree on fabric, and fit you before finishing.",
-        "image": "dress.png",
+        "image": "images/dress.png",
         "items": [
-            {"title": "Traditional dress", "image": "dress.png"},
+            {"title": "Traditional dress", "image": "images/dress.png"},
         ],
     },
 
@@ -29,9 +29,9 @@ SERVICES = [
         "title": "Uniforms",
         "summary": "Durable uniforms, sewn to last.",
         "info": "We sew to your group's specifications. Bring your school, church or work requirements and we will match them.",
-        "image": "uniform.png",
+        "image": "images/uniform.png",
         "items": [
-            {"title": "Church uniform", "image": "uniform.png"},
+            {"title": "Church uniform", "image": "images/uniform.png"},
         ],
     },
     {
@@ -39,9 +39,9 @@ SERVICES = [
         "title": "Alterations",
         "summary": "Hems, tapering, resizing and repairs.",
         "info": "Hems, zips, taking in or letting out. Most small jobs are ready within a few days.",
-        "image": "hem.png",
+        "image": "images/hem.png",
         "items": [
-            {"title": "Trouser hem", "image": "hem.png"},
+            {"title": "Trouser hem", "image": "images/hem.png"},
         ],
     },
 ]
@@ -54,3 +54,6 @@ FEATURES = [
 ]
 
 DEBUG = os.environ.get("DEBUG", "") == "1"
+
+if os.environ.get("USE_LOCAL_SETTINGS") == "1":
+  from local_settings import SERVICES

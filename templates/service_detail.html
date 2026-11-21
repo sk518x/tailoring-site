@@ -11,8 +11,9 @@ endblock %} {% block content %}
   {% for item in service["items"] %}
   <div class="service-card">
     <img
-      src="{{ url_for('static', filename='images/' ~ item.image) }}"
+      src="{{ url_for('static', filename=item.image) }}"
       alt="{{ item.title }}"
+      loading="lazy"
     />
     <h4>{{ item.title }}</h4>
     <a

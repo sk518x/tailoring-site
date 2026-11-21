@@ -365,3 +365,15 @@ def test_business_details_can_come_from_environment(monkeypatch):
     finally:
         monkeypatch.delenv("BUSINESS_NAME")
         importlib.reload(settings)
+
+def test_real_photos_stay_out_of_git():
+    gitignore = (Path(__file__).parent.parent / ".gitignore").read_text()
+    assert "local_settings.py" in gitignore
+    assert "static/photos/" in gitignore
+
+def test_service_images_are_paths_inside_static():
+    import settings
+    for service in settings.SERVICES:
+        assert service["image"].startswith(("images/", "photos/"))
+        for item in service["items"]:
+            assert item["image"].startswith(("images/", "photos/"))
