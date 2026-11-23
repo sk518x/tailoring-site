@@ -46,6 +46,7 @@ header h1 {
 
 nav a {
   display: inline-block;
+  text-decoration: none;
   color: #4e1515;
   background: rgba(255, 255, 255, 0.7);
   padding: 8px 14px;
@@ -432,6 +433,6 @@ button.back-link {
 
 nav a[aria-current="page"] {
   text-decoration: underline;
-  /* text-decoration-thickness: 2px; */
+  text-decoration-thickness: 2px;
   text-underline-offset: 6px;
 }
