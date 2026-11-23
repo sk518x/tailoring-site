@@ -434,6 +434,6 @@ button.back-link {
 
 nav a[aria-current="page"] {
   text-decoration: underline;
-  text-decoration-thickness: 2px;
+  /* text-decoration-thickness: 2px; */
   text-underline-offset: 6px;
 }
