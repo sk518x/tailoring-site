@@ -141,7 +141,6 @@ img {
   border: 2px solid var(--pink);
   border-radius: 6px;
   color: var(--pink);
-  text-decoration: none;
 }
 
 .button-outline:hover {
