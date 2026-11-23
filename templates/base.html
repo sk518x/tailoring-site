@@ -19,12 +19,14 @@
     <div class="page-background"></div>
    <header>
     <h1>{{ business_name }}</h1>
-    <nav>
-        <a href="/" class="back-link">Home</a>
-        <a href="/services" class="back-link">Services</a>
-        <a href="/contact" class="back-link">Contact</a>
-        <a href="/enquire" class="back-link">Enquire</a>
-    </nav>
+   
+  <nav>
+    <a href="/"{% if request.path == '/' %} aria-current="page"{% endif %}>Home</a>
+    <a href="/services"{% if request.path == '/services' or request.path.startswith('/services/') %} aria-current="page"{% endif %}>Services</a>
+    <a href="/contact"{% if request.path == '/contact' %} aria-current="page"{% endif %}>Contact</a>
+    <a href="/enquire"{% if request.path == '/enquire' %} aria-current="page"{% endif %}>Enquire</a>
+  </nav>
+
 </header>
     {% block banner %}
     {% endblock %}

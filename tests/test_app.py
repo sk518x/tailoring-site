@@ -5,6 +5,7 @@ from app import app
 import pytest
 import database
 from pathlib import Path
+import re
 
 
 @pytest.fixture(autouse=True)
@@ -454,3 +455,29 @@ def test_lockout_expires():
         assert response.status_code == 302
     finally:
         app_module.WINDOW_SECONDS = 15 * 60
+
+def current_links(path):
+    html = app.test_client().get(path).data.decode()
+    return re.findall(r'<a[^>]*aria-current="page"[^>]*>', html)
+
+
+def test_home_link_is_marked_on_home_page():
+    links = current_links("/")
+    assert len(links) == 1
+    assert 'href="/"' in links[0]
+
+
+def test_services_link_is_marked_on_services_and_service_pages():
+    for path in ["/services", "/services/uniforms"]:
+        links = current_links(path)
+        assert len(links) == 1
+        assert 'href="/services"' in links[0]
+
+
+def test_contact_and_enquire_links_are_marked():
+    assert 'href="/contact"' in current_links("/contact")[0]
+    assert 'href="/enquire"' in current_links("/enquire")[0]
+
+
+def test_no_menu_link_is_marked_on_admin_login():
+    assert current_links("/admin/login") == []
