@@ -4,8 +4,7 @@ A responsive website built with **Python and Flask** for a small tailoring busin
 
 ## Demo
 
-**Demo video:** [Watch the website demonstration](videos/demo-video.mp4)
-
+**Demo video:** [▶ Watch the Tailoring Website Demo](https://youtu.be/Lsak_2zCe90)
 
 ## Screenshots
 
