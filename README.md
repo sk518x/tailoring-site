@@ -17,7 +17,7 @@ A responsive website built with **Python and Flask** for a small tailoring busin
 </p>
 
 <p align="center">
-  <img src="screenshots/service-detail-1.png" width="48%" alt="Service details page">
+  <img src="screenshots/service-details-1.png" width="48%" alt="Service details page">
   <img src="screenshots/enquiry-form.png" width="48%" alt="Enquiry form">
 </p>
 
