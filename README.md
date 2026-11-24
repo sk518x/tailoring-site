@@ -6,17 +6,29 @@ A responsive website built with **Python and Flask** for a small tailoring busin
 
 **Demo video:** [Watch the website demonstration](videos/demo-video.mp4)
 
+
 ## Screenshots
 
 ### Desktop
 
-\<p align="center">   \<img src="screenshots/homepage.png" width="48%" alt="Website homepage">   \<img src="screenshots/services.png" width="48%" alt="Services page"> \</p>
+<p align="center">
+  <img src="screenshots/homepage.png" width="48%" alt="Website homepage">
+  <img src="screenshots/services.png" width="48%" alt="Services page">
+</p>
 
-\<p align="center">   \<img src="screenshots/service-detail-1.png" width="48%" alt="Service details page">   \<img src="screenshots/enquiry-form.png" width="48%" alt="Enquiry form"> \</p>
+<p align="center">
+  <img src="screenshots/service-detail-1.png" width="48%" alt="Service details page">
+  <img src="screenshots/enquiry-form.png" width="48%" alt="Enquiry form">
+</p>
 
 ### Mobile
 
-\<p align="center">   \<img src="screenshots/mobile-homepage.png" width="30%" alt="Mobile homepage">   \<img src="screenshots/mobile-services.png" width="30%" alt="Mobile services page">   \<img src="screenshots/mobile-services-detail.png" width="30%" alt="Mobile service details"> \</p>
+<p align="center">
+  <img src="screenshots/mobile-homepage.png" width="30%" alt="Mobile homepage">
+  <img src="screenshots/mobile-services.png" width="30%" alt="Mobile services page">
+  <img src="screenshots/mobile-services-detail.png" width="30%" alt="Mobile service details">
+</p>
+
 
 ## Why I Built It
 
