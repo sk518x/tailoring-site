@@ -26,7 +26,7 @@ A responsive website built with **Python and Flask** for a small tailoring busin
 <p align="center">
   <img src="screenshots/mobile-homepage.png" width="30%" alt="Mobile homepage">
   <img src="screenshots/mobile-services.png" width="30%" alt="Mobile services page">
-  <img src="screenshots/mobile-services-detail.png" width="30%" alt="Mobile service details">
+  <img src="screenshots/mobile-service-details.png" width="30%" alt="Mobile service details">
 </p>
 
 
